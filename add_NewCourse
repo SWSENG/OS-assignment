@@ -1,0 +1,73 @@
+#!/bin/bash
+
+echo -e "Add New Course Form"
+echo -e "===========================\n"
+
+newCourse=i
+until [ "$newCourse" = "ok" ]
+do
+	echo -en "Course Code : "; read courseCode
+	if [[ $courseCode =~ ^[A-Za-z]{4}[0-9]{4} ]]
+	then
+		newCourse=ok
+		courseCode=$(echo $courseCode | tr 'a-z' 'A-Z')
+		code=$courseCode
+	else
+		echo -e "Please check carefully your code\n\n"
+	fi
+done
+
+newCourseName=i
+until [ "$newCourseName" = "ok" ]
+do
+	echo -en "Course Name : "; read courseName
+	if [[ $courseName =~ ^[*\A-Za-z]+$ ]]
+	then 
+		newCourseName=ok
+		courseName=$(echo $courseName | tr 'a-z' 'A-Z')
+		name=$courseName
+	else
+		echo -e "No spacing between your name\n\n"
+	fi
+done
+
+newCreditHours=i
+until [ "$newCreditHours" = "ok" ]
+do
+	echo -en "Credit Hours(1-12) : "; read creditHours
+	if [[ $creditHours =~ ^[1]?[0-9]$ ]] && [ "$creditHours" -ge 1 -a "$creditHours" -le 12 ]
+	then 
+		newCreditHours=ok
+		credit=$creditHours
+	else
+		echo -e "Wrong credit hours Please try again\n\n"
+	fi
+done
+
+	echo -en "Remarks : "; read courseRemarks
+	remarks=$courseRemarks
+
+saveInfo=i
+until [ "$saveInfo" = "correct" ]
+do
+	echo -en "Add Another Course?(y)es or (q)uit :"; read save
+	
+	case "$save" in
+	y|Y)
+		echo -e "\nSaving the record\n"
+		sleep 2
+		echo -e "\nYour record have heen saved\n"
+		echo "$code:$name:$credit:$remarks" >>course.txt
+		reset
+		./menu_Selection
+		saveInfo=correct;;
+	q|Q)
+		echo -e "\nYour record will not be save\n"
+		sleep 2
+		reset
+		./menu_Selection
+		saveInfo=correct;;
+	*) 
+		echo -e "Invalid option\n\n"
+	esac
+done

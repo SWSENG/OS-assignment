@@ -1,0 +1,48 @@
+#!/bin/bash
+
+echo -e "Search Student Details Form"
+echo -e "===========================\n"
+
+loop=y
+until [ "$loop" = "n" ]
+do
+	echo -en "Enter student ID :"; read inputID
+	inputID=$(echo $inputID | tr 'a-z' 'A-Z')
+	echo -e "============================================================\n"
+	sleep 1
+	search="$(grep "$inputID" "student.txt")"
+	
+	while IFS=: read -r programme id name icPass birth con email
+	do
+		if [ "$inputID" == "$id" ]
+		then
+			echo -e "\nStudent Name   : $name"
+			echo -e "\nContact Number : $con"
+			echo -e "\nEmail Address  : $email"
+			loop=n
+		else
+			echo -e "Please enter a valid ID\n\n"
+		fi
+	done <<< $search
+done
+
+until [ "$quit" = "y" ]
+do
+	echo -en "\n\nSearch Another Student?(y)es or (q)uit :"; read searchChoice
+	echo
+	case "$searchChoice" in
+	y|Y)
+		quit=y
+		sleep 1
+		reset
+		./search_Student;;
+	q|Q)
+		quit=y
+		echo -e "Exiting to main menu"
+		sleep 1
+		reset
+		./menu_Selection;;
+	*)
+		echo -e "Invalid iput please try again :";;
+	esac
+done

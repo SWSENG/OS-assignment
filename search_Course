@@ -1,0 +1,48 @@
+#!/bin/bash
+
+echo -e "Search Course Details Form"
+echo -e "===========================\n"
+
+loop=y
+until [ "$loop" = "n" ]
+do
+	echo -en "Enter Course Code :"; read inputCode
+	inputCode=$(echo $inputCode | tr 'a-z' 'A-Z')
+	echo -e "============================================================\n"
+	sleep 1
+	search="$(grep "$inputCode" "course.txt")"
+	
+	while IFS=: read -r code name credit remarks
+	do
+		if [ "$inputCode" == "$code" ]
+		then
+			echo -e "\nCourse Name   : $name"
+			echo -e "\nCredit Hours  : $credit"
+			echo -e "\nRemarks       : $remarks"
+			loop=n
+		else
+			echo -e "Please enter a valid ID\n\n"
+		fi
+	done <<< $search
+done
+
+until [ "$quit" = "y" ]
+do
+	echo -en "\n\nSearch Another Course?(y)es or (q)uit :"; read searchChoice
+	echo
+	case "$searchChoice" in
+	y|Y)
+		quit=y
+		sleep 1
+		reset
+		./search_Course;;
+	q|Q)
+		quit=y
+		echo -e "Exiting to main menu"
+		sleep 1
+		reset
+		./menu_Selection;;
+	*)
+		echo -e "Invalid iput please try again :";;
+	esac
+done

@@ -1,0 +1,167 @@
+#!/bin/bash
+
+echo -e "Programme Selections Menu"
+echo -e "========================="
+echo -e "A -RIT (Bachelor in Information Technology)"
+echo -e "B -RSD (Bachelor in Software Development)"
+echo -e "C -RST (Bachelor in Interactive Software Technology)"
+echo -e "D -REI (Bachelor in Enterprise Information System)"
+echo -e "E -RSF (Bachelor in Software Engineering)"
+echo -e "F -RDS (Bachelor in Data Science)"
+echo -e "G -RIS (Bachelor in Information Security)\n"
+echo -e "Q -Quit (Return to University Management Menu)\n"
+
+userChoice=i
+until [ "$userChoice" = "correct" ]
+do
+	echo -en "Please select a choice:"; read choice
+	case "$choice" in
+	a|A)
+	userChoice=correct
+	programme="RIT";;
+	b|B)
+	userChoice=correct
+	programme="RSD";;
+	c|C)
+	userChoice=correct
+	programme="RST";;
+	d|D)
+	userChoice=correct
+	programme="REI";;
+	e|E)
+	userChoice=correct
+	programme="RSF";;
+	f|F)
+	userChoice=correct
+	programme="RDS";;
+	g|G)
+	userChoice=correct
+	programme="RIS";;
+	q|Q)
+	echo -e "Running..."
+	sleep 2
+	reset
+	userChoice=correct
+	./menu_Selection;;
+	*) echo -e "Invalid option\n\n"
+	esac
+done
+
+#Add New Student 
+echo -e "Add New Student Form"
+echo -e "===================="
+
+#Student ID data validation
+stID=i
+until [ "$stID" = "correct" ]
+do
+	echo -en "Student ID(21WMR00000) :"; read studentID
+	if [[ $studentID =~ ^[0-9]{2}[\*A-Za-z]{3}[0-9]{5}$ ]]
+	then 
+		stID=correct
+		studentID=$(echo $studentID | tr 'a-z' 'A-Z')
+		id=$studentID
+	else
+		echo -e "Please Try Again\n\n"
+	fi
+done
+
+#Student name data validation
+stName=i
+until [ "$stName" = "correct" ]
+do
+	echo -en "Full Name(as per NRIC) :"; read studentName
+	if [[ $studentName =~ ^[*\A-Za-z]+$ ]]
+	then 
+		stName=correct
+		studentName=$(echo $studentName | tr 'a-z' 'A-Z')
+		name=$studentName
+	else
+		echo -e "No spacing between your name\n\n"
+	fi
+done
+
+#Student IC/passport data validation
+stICPss=i
+until [ "$stICPss" = "correct" ]
+do
+	echo -en "NRIC/Passport Number   :"; read icPss
+	if [[ $icPss =~ ^[*\A-Za-z0-9]+$ ]]
+	then
+		stICPss=correct
+		icPss=$(echo $icPss | tr 'a-z' 'A-Z')
+		icPass=$icPss
+	else
+		echo -e "No spacing between your ic/passport\n\n"
+	fi
+done
+
+#Student birth date data validation
+stBirth=i
+until [ "$stBirth" = "correct" ]
+do
+	echo -en "Birth Date(DD/MM/YYYY) :"; read studentBirth
+	if [[ $studentBirth =~ ^[0-9]?[0-9]/[0-9]?[0-9]/[0-9]{4} ]]
+	then
+		stBirth=correct
+		birth=$studentBirth
+	else
+		echo -e "Please enter correctly your birth date\n\n"
+	fi
+done
+
+#Student contact data validation
+stCon=i
+until [ "$stCon" = "correct" ]
+do
+	echo -en "Contact Number         :"; read studentCon
+	if [[ $studentCon =~ ^01[0-9]{1}-[0-9]{7} ]]
+	then
+		stCon=correct 
+		con=$studentCon
+	else
+		echo -e "Please check carefully your contact number\n\n"
+	fi
+done
+
+#Student email data validation
+stemail=i
+until [ "$stemail" = "correct" ]
+do
+	echo -en "Email Address          :"; read studentemail
+	if [[ $studentemail =~ ^[A-Za-z]+-[A-Za-z]{2}[0-9]{2}@student.tarc.edu.my$ ]]
+	then 
+		stemail=correct 
+		email=$studentemail
+	else
+		echo -e "Please check carefully your email\n\n"
+	fi		
+done
+
+echo
+echo
+
+saveInfo=i
+until [ "$saveInfo" = "correct" ]
+do
+	echo -en "Add Another Student?(y)es or (q)uit :"; read save
+	
+	case "$save" in
+	y|Y)
+		echo -e "\nSaving the record\n"
+		sleep 2
+		echo -e "\nYour record have heen saved\n"
+		echo "$programme:$id:$name:$icPass:$birth:$con:$email" >>student.txt
+		reset
+		./menu_Selection
+		saveInfo=correct;;
+	q|Q)
+		echo -e "\nYour record will not be save\n"
+		sleep 2
+		reset
+		./menu_Selection
+		saveInfo=correct;;
+	*) 
+		echo -e "Invalid option\n\n"
+	esac
+done

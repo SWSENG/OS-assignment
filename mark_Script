@@ -1,0 +1,51 @@
+#!/bin/bash
+
+if [ "$mark" -ge 80 -a "$mark" -le 100 ]
+then
+	grade=A
+	GPA=4.00
+	remarks=Excelent
+	
+elif [ "$mark" -ge 75 -a "$mark" -le 79 ]
+then
+	grade=A-
+	GPA=3.75
+	remarks=Excelent
+	
+elif [ "$mark" -ge 70 -a "$mark" -le 74 ]
+then
+	grade=B+
+	GPA=3.50
+	remarks=Good
+elif [ "$mark" -ge 65 -a "$mark" -le 69 ]
+then
+	grade=B
+	GPA=3.00
+	remarks=Good
+elif [ "$mark" -ge 60 -a "$mark" -le 64 ]
+then
+	grade=B-
+	GPA=2.75
+	remarks=Pass
+elif [ "$mark" -ge 55 -a "$mark" -le 59 ]
+then
+	grade=C+
+	GPA=2.50
+	remarks=Pass
+elif [ "$mark" -ge 50 -a "$mark" -le 54 ]
+then
+	grade=C
+	GPA=2.00
+	remarks=Pass
+elif [ "$mark" -ge 0 -a "$mark" -le 49 ]
+then
+	grade=F
+	GPA=0
+	remarks=Failed
+	
+else
+echo "$mark"
+	echo -e "Mark not in range (1-100) Please try again\n\n"
+	
+fi
+

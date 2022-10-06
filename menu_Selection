@@ -1,0 +1,57 @@
+#!/bin/bash
+
+echo -e "University Management Menu"
+echo -e "=========================="
+echo -e "1 -Add New Student"
+echo -e "2 -Search Student Detail"
+echo -e "3 -Add NewCourse"
+echo -e "4 -Search Course Detail"
+echo -e "5 -Grade Student\n"
+echo -e "Q -Quit(exit from Program)\n"
+
+userChoice=i
+until [ "$userChoice" = "correct" ]
+do
+	echo -en "Please select a choice:"; read choice
+	
+	case "$choice" in
+	1) 
+		echo -e "Running..."
+		sleep 2
+		reset
+		userChoice=correct
+		./programme_Selection;;
+	2)
+		echo -e "Running..."
+		sleep 2
+		reset
+		userChoice=correct
+		./search_Student;;
+	3)
+		echo -e "Running..."
+		sleep 2
+		reset
+		userChoice=correct
+		./add_NewCourse;;
+	4)
+		echo -e "Running..."
+		sleep 2
+		reset
+		userChoice=correct
+		./search_Course;;
+	5)
+		echo -e "Running..."
+		sleep 2
+		reset
+		userChoice=correct
+		./grade_Students;;
+	q|Q)
+		echo -e "Exiting program"
+		sleep 2
+		userChoice=correct
+		exit;;
+	*) 
+		echo -e "Invalid option\n\n"
+	esac
+done	
+
